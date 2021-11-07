@@ -41,7 +41,8 @@ there are two element types for an ascii map.
 2. draw a polygon which will be used for bbox. Add `"isbbox": true` to `properties`. There should be only one bbox for an ascii map.
 4. continue to draw polygons which will be used for walls.
 
-see [map.geojson](/map.geojson) for an example, and see [map.txt](/map.txt) for its ascii map.
+see [map.geojson](/map.geojson) for an example. I drew it using [tomscholz](https://tomscholz.github.io/geojson-editor) geojson editor agaist satellite. [map.txt](/map.txt) is its ascii map as the result.
 
 <img src="img/draw.png" width=40% height=40% />
+
 <img src="img/asciimap.png" width=40% height=40% />
