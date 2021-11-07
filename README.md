@@ -45,4 +45,4 @@ see [map.geojson](/map.geojson) for an example. I drew it using [tomscholz](http
 
 <img src="img/draw.png" width=40% height=40% />
 
-<img src="img/asciimap.png" width=40% height=40% />
+<img src="img/asciimap.png" width=40% height=30% />
