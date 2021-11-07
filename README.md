@@ -28,28 +28,17 @@ an example,
 $ asciimap -f map.geojson -g 0.00001 -m map.txt
 ```
 
-### spec of geojson
-#### coordinate system
-```
- 0 +-----------> y
-   |
-   |
-   |
-   v
-   x
-```
-
+### Create the GeoJSON
 #### elements
-there are two type elements for an ascii map.
+there are two element types for an ascii map.
 * `bbox`: the boundary box of a map.
 * `wall`: the wall which a routing can't go through.
 
 ![](img/map.png)
 
-#### how to create a geojson
+#### how to drow the geojson
 1. go to your favorite geojson editor such as [geojson.io](http://geojson.io/#map=2/20.0/0.0) or [tomscholz](https://tomscholz.github.io/geojson-editor).
-2. draw a polygon which will be used for bbox.
-3. add `"isbbox": true` to `properties` for declaring this polgyon is bbox. There is only one polygon is declared as a bbox.
+2. draw a polygon which will be used for bbox. Add `"isbbox": true` to `properties`. There should be only one bbox for an ascii map.
 4. continue to draw polygons which will be used for walls.
 
 see [map.geojson](/map.geojson) for an example.
