@@ -1,7 +1,19 @@
+```
+####################
+#              .B  #
+#             .    #
+#   #########.     #
+#    ........      #
+#   .    #######   #
+#  .               #
+# A                #
+#                  #
+####################
+```
 # asciimap
 asciimap builds an ASCII map from a geojson file. The ascii map can be used for [astar](https://github.com/shanghuiyang/astar) project.
 
-## usage
+## Usage
 ```
 Application Options:
   -f, --geojson-file=FILENAME    Input geojson file name
@@ -11,11 +23,35 @@ Application Options:
 Help Options:
   -h, --help                     Show this help message
 ```
-
-### example
+an example,
 ```shell
-$asciimap -f map.geojson -g 0.00001 -m map.txt
+$ asciimap -f map.geojson -g 0.00001 -m map.txt
 ```
 
 ### spec of geojson
+#### coordinate system
+```
+ 0 +-----------> y
+   |
+   |
+   |
+   v
+   x
+```
 
+#### elements
+there are two type elements for an ascii map.
+* `bbox`: the boundary box of a map.
+* `wall`: the wall which a routing can't go through.
+
+![](img/map.png)
+
+#### how to create a geojson
+1. go to your favorite geojson editor such as [geojson.io](http://geojson.io/#map=2/20.0/0.0) or [tomscholz](https://tomscholz.github.io/geojson-editor).
+2. draw a polygon which will be used for bbox.
+3. add `"isbbox": true` to `properties` for declaring this polgyon is bbox. There is only one polygon is declared as a bbox.
+4. continue to draw polygons which will be used for walls.
+
+see [map.geojson](/map.geojson) for an example.
+
+<img src="img/draw.png" width=40% height=40% />
