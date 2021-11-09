@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 
 	"github.com/jessevdk/go-flags"
@@ -16,7 +15,7 @@ import (
 
 var (
 	mapbbox  *bbox
-	gridSize = 0.000010
+	gridSize = 0.00001
 )
 
 type point struct {
@@ -33,47 +32,27 @@ type bbox struct {
 
 func main() {
 	var opts struct {
-		GeojsonFile string  `short:"f" long:"geojson-file" description:"Input geojson file name" value-name:"FILENAME"`
-		GridSize    float64 `short:"g" long:"grid-size" description:"Grid size" value-name:"GRIDSIZE" default:"0.000010"`
+		GeojsonFile string  `short:"f" long:"geojson-file" required:"true" description:"Input geojson file nam(required)" value-name:"FILENAME"`
+		GridSize    float64 `short:"g" long:"grid-size" description:"Grid size" value-name:"GRIDSIZE" default:"0.00001"`
 		MapFile     string  `short:"m" long:"map-file" description:"Output map file" value-name:"MAPFILE" default:"map.txt"`
 	}
 
-	parser := flags.NewParser(&opts, flags.HelpFlag|flags.PassDoubleDash)
-	parser.LongDescription = `Create a map`
-	_, err := parser.Parse()
+	_, err := flags.Parse(&opts)
 	if err != nil {
-		log.Print(err)
-		parser.WriteHelp(os.Stdout)
 		os.Exit(1)
 	}
 
-	// geojson file is requered.
-	if !parser.FindOptionByLongName("geojson-file").IsSet() {
-		parser.WriteHelp(os.Stdout)
-		os.Exit(1)
-
-	}
-	gsFile := opts.GeojsonFile
-
-	if parser.FindOptionByLongName("grid-size").IsSet() {
-		gridSize = opts.GridSize
-	}
-
-	mapfile := "map.txt"
-	if parser.FindOptionByLongName("map-file").IsSet() {
-		mapfile = opts.MapFile
-	}
-
-	rawJSON, err := loadMap(gsFile)
+	gridSize = opts.GridSize
+	rawJSON, err := loadMap(opts.GeojsonFile)
 	if err != nil {
-		log.Print(err)
+		fmt.Printf("ERROR! %v\n", err)
 		os.Exit(1)
 	}
 
 	strategy := planar.NormalStrategy()
 	fc, err := geojson.UnmarshalFeatureCollection([]byte(rawJSON))
 	if err != nil {
-		log.Print(err)
+		fmt.Printf("ERROR! %v\n", err)
 		os.Exit(1)
 	}
 	var bb space.Geometry
@@ -104,7 +83,7 @@ func main() {
 			for _, w := range walls {
 				yes, err := strategy.Intersects(p, w)
 				if err != nil {
-					log.Print(err)
+					fmt.Printf("ERROR! %v\n", err)
 					os.Exit(1)
 				}
 				if yes {
@@ -115,7 +94,7 @@ func main() {
 	}
 
 	mapstr := m.String()
-	ioutil.WriteFile(mapfile, []byte(mapstr), os.ModePerm)
+	ioutil.WriteFile(opts.MapFile, []byte(mapstr), os.ModePerm)
 	fmt.Printf("map bbox:\n")
 	fmt.Printf("-left:\t\t%11.6f\n", mapbbox.Left)
 	fmt.Printf("-right:\t\t%11.6f\n", mapbbox.Right)
