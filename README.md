@@ -16,8 +16,8 @@ asciimap builds an ASCII map from a geojson file. The ascii map can be used for 
 ## Usage
 ```
 Application Options:
-  -f, --geojson-file=FILENAME    Input geojson file name
-  -g, --grid-size=GRIDSIZE       Grid size (default: 0.000010)
+  -f, --geojson-file=FILENAME    Input geojson file name(required)
+  -g, --grid-size=GRIDSIZE       Grid size (default: 0.00001)
   -m, --map-file=MAPFILE         Output map file (default: map.txt)
 
 Help Options:
@@ -36,7 +36,7 @@ there are two element types for an ascii map.
 
 ![](img/map.png)
 
-#### how to drow the geojson
+#### how to draw the geojson?
 1. go to your favorite geojson editor such as [geojson.io](http://geojson.io/#map=2/20.0/0.0) or [tomscholz](https://tomscholz.github.io/geojson-editor).
 2. draw a polygon which will be used for bbox. Add `"isbbox": true` to `properties`. There should be only one bbox for an ascii map.
 4. continue to draw polygons which will be used for walls.
