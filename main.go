@@ -5,12 +5,17 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/jessevdk/go-flags"
 	"github.com/shanghuiyang/astar"
 	"github.com/shanghuiyang/astar/tilemap"
 	"github.com/spatial-go/geoos/geojson"
 	"github.com/spatial-go/geoos/planar"
 	"github.com/spatial-go/geoos/space"
+	"gopkg.in/alecthomas/kingpin.v2"
+)
+
+const (
+	defaultGridSize = "0.00001"
+	defaultMapFile  = "map.txt"
 )
 
 var (
@@ -31,19 +36,15 @@ type bbox struct {
 }
 
 func main() {
-	var opts struct {
-		GeojsonFile string  `short:"f" long:"geojson-file" required:"true" description:"Input geojson file nam(required)" value-name:"FILENAME"`
-		GridSize    float64 `short:"g" long:"grid-size" description:"Grid size" value-name:"GRIDSIZE" default:"0.00001"`
-		MapFile     string  `short:"m" long:"map-file" description:"Output map file" value-name:"MAPFILE" default:"map.txt"`
-	}
 
-	_, err := flags.Parse(&opts)
-	if err != nil {
-		os.Exit(1)
-	}
+	geojsonFile := kingpin.Arg("geojson-file", "Input geojson file name(required)").Required().String()
+	gz := kingpin.Flag("grid-size", "Grid size").Short('g').Default(defaultGridSize).Float64()
+	mapFile := kingpin.Flag("map-file", "Output map file").Short('m').Default(defaultMapFile).String()
+	kingpin.HelpFlag.Short('h')
+	kingpin.Parse()
 
-	gridSize = opts.GridSize
-	rawJSON, err := loadMap(opts.GeojsonFile)
+	gridSize = *gz
+	rawJSON, err := loadMap(*geojsonFile)
 	if err != nil {
 		fmt.Printf("ERROR! %v\n", err)
 		os.Exit(1)
@@ -94,7 +95,7 @@ func main() {
 	}
 
 	mapstr := m.String()
-	ioutil.WriteFile(opts.MapFile, []byte(mapstr), os.ModePerm)
+	ioutil.WriteFile(*mapFile, []byte(mapstr), os.ModePerm)
 	fmt.Printf("map bbox:\n")
 	fmt.Printf("-left:\t\t%11.6f\n", mapbbox.Left)
 	fmt.Printf("-right:\t\t%11.6f\n", mapbbox.Right)

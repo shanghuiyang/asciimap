@@ -15,17 +15,24 @@ asciimap builds an ASCII map from a geojson file. The ascii map can be used for 
 
 ## Usage
 ```
-Application Options:
-  -f, --geojson-file=FILENAME    Input geojson file name(required)
-  -g, --grid-size=GRIDSIZE       Grid size (default: 0.00001)
-  -m, --map-file=MAPFILE         Output map file (default: map.txt)
+usage: asciimap [<flags>] <geojson-file>
 
-Help Options:
-  -h, --help                     Show this help message
+Flags:
+  -h, --help                Show context-sensitive help (also try --help-long and --help-man).
+  -g, --grid-size=0.00001   Grid size
+  -m, --map-file="map.txt"  Output map file
+
+Args:
+  <geojson-file>  Input geojson file name(required)
 ```
-an example,
+
+examples,
 ```shell
-$ asciimap -f map.geojson -g 0.00001 -m map.txt
+# generate ascii map from map.geojson using default grid-size and map-file.
+$ asciimap map.geojson
+
+# or, specify grid-size and ouput map-file.
+$ asciimap map.geojson -g 0.00002 -m yourmap.txt
 ```
 
 ### Create the GeoJSON
