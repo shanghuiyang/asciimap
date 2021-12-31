@@ -11,6 +11,9 @@
 ####################
 ```
 # asciimap
+[![CI](https://github.com/shanghuiyang/asciimap/actions/workflows/ci.yml/badge.svg)](https://github.com/shanghuiyang/asciimap/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/shanghuiyang/asciimap/blob/main/LICENSE)
+
 asciimap builds an ASCII map from a geojson file. The ascii map can be used for [astar](https://github.com/shanghuiyang/astar) project.
 
 ## Usage

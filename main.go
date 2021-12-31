@@ -43,7 +43,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	fc, err := geojson.UnmarshalFeatureCollection([]byte(rawJSON))
+	fc, err := geojson.UnmarshalFeatureCollection(rawJSON)
 	if err != nil {
 		fmt.Printf("ERROR! %v\n", err)
 		os.Exit(1)
